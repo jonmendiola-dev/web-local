@@ -1,22 +1,66 @@
-WebLocal
+# 🌐 WebLocal
 
-Professional landing page for local businesses.
+Professional landing page designed to help local businesses establish a modern online presence.
 
-✨ Features:
-• Responsive Design
-• Multi-language
-• Pricing section
-• Contact form
-• WhatsApp integration
-• Smooth animations
+## 🚀 Live Demo
 
-Technologies:
-• HTML5
-• CSS3
-• JavaScript
+👉 https://weblocal-dev.vercel.app
 
-Live Demo:
-https://weblocal-dev.vercel.app
+---
 
-Author:
-Jon Mendiola.
+## 📖 About
+
+WebLocal is a responsive landing page built with HTML, CSS and JavaScript.
+
+The project was created to showcase a modern web design focused on small businesses that need a professional website.
+
+---
+
+## ✨ Features
+
+- Responsive design
+- Modern UI
+- Pricing section
+- Contact form
+- WhatsApp button
+- Multi-language support
+- Smooth scrolling animations
+- Mobile friendly
+
+---
+
+## 🛠 Technologies
+
+- HTML5
+- CSS3
+- JavaScript
+
+---
+
+## 📂 Project Structure
+
+```
+web-local/
+│
+├── index.html
+├── css/
+│   └── style.css
+├── assets/
+├── README.md
+└── LICENSE
+```
+
+---
+
+## 📸 Preview
+
+*(Screenshots coming soon)*
+
+---
+
+## 👨‍💻 Author
+
+Jon Mendiola
+
+GitHub:
+https://github.com/jonmendiola-dev
