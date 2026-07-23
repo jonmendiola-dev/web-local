@@ -1,5 +1,7 @@
 # 🌐 WebLocal
 
+![WebLocal Hero](docs/screenshots/hero.jpg)
+
 Professional landing page designed to help local businesses establish a modern online presence.
 
 ## 🚀 Live Demo
@@ -10,22 +12,22 @@ Professional landing page designed to help local businesses establish a modern o
 
 ## 📖 About
 
-WebLocal is a responsive landing page built with HTML, CSS and JavaScript.
+WebLocal is a responsive landing page built with HTML, CSS, and JavaScript.
 
-The project was created to showcase a modern web design focused on small businesses that need a professional website.
+The project showcases a clean, modern design focused on helping small businesses improve their online presence through a fast, responsive, and user-friendly website.
 
 ---
 
 ## ✨ Features
 
-- Responsive design
-- Modern UI
-- Pricing section
-- Contact form
-- WhatsApp button
-- Multi-language support
-- Smooth scrolling animations
-- Mobile friendly
+- 📱 Fully responsive design
+- 🎨 Modern and clean UI
+- 💰 Pricing section
+- 📞 Contact section
+- 💬 WhatsApp integration
+- 🌍 Multi-language support
+- ⚡ Smooth scrolling animations
+- 🚀 Fast loading performance
 
 ---
 
@@ -39,28 +41,51 @@ The project was created to showcase a modern web design focused on small busines
 
 ## 📂 Project Structure
 
-```
+```text
 web-local/
 │
-├── index.html
 ├── css/
 │   └── style.css
+├── js/
+│   └── script.js
 ├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+├── docs/
+│   └── screenshots/
+│       ├── hero.jpg
+│       ├── pricing.jpg
+│       └── contact.jpg
+├── index.html
 ├── README.md
 └── LICENSE
 ```
 
 ---
 
-## 📸 Preview
+## 📸 Screenshots
 
-*(Screenshots coming soon)*
+### Homepage
+
+![Homepage](docs/screenshots/hero.jpg)
+
+### Pricing Section
+
+![Pricing](docs/screenshots/pricing.jpg)
+
+### Contact Section
+
+![Contact](docs/screenshots/contact.jpg)
 
 ---
 
 ## 👨‍💻 Author
 
-Jon Mendiola
+**Jon Mendiola**
 
-GitHub:
-https://github.com/jonmendiola-dev
+GitHub: https://github.com/jonmendiola-dev
+
+---
+
+⭐ If you found this project interesting, feel free to star the repository.
