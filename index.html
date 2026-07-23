@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebLocal — Web Design for Businesses in Spain &amp; Bulgaria</title>
+
+  <!-- Favicon SVG inline -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia%2C serif' font-size='32' font-weight='700' font-style='italic' fill='%23D4A853'%3EW%3C/text%3E%3Ccircle cx='48' cy='44' r='5' fill='%23C8956A'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia%2C serif' font-size='32' font-weight='700' font-style='italic' fill='%23D4A853'%3EW%3C/text%3E%3Ccircle cx='48' cy='44' r='5' fill='%23C8956A'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Flag Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            playfair: ['"Playfair Display"', 'serif'],
+            inter: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            amber: {
+              50:  '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ============================
+       BASE
+    ============================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: rgb(250, 250, 248);
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================
+       FADE-IN ANIMATIONS (scroll)
+    ============================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ============================
+       NAVBAR
+    ============================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #f1f5f9;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled {
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: #111827;
+      text-decoration: none;
+    }
+    .logo span { color: #f59e0b; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #111827; }
+
+    @media(max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* Language dropdown */
+    .lang-wrapper { position: relative; }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #4b5563;
+      border: 1px solid #e5e7eb;
+      border-radius: 9999px;
+      padding: 6px 12px;
+      background: white;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { background: #f9fafb; color: #111827; }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      min-width: 140px;
+      z-index: 100;
+      overflow: hidden;
+    }
+    .lang-dropdown.open { display: block; }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .lang-option:hover { background: #f9fafb; }
+
+    /* CTA button nav */
+    .btn-cta-nav {
+      display: none;
+      background: #111827;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-cta-nav:hover { background: #374151; }
+    @media(min-width: 640px) { .btn-cta-nav { display: block; } }
+
+    /* ============================
+       HERO SECTION
+    ============================= */
+    .hero {
+      position: relative;
+      padding: calc(64px + 6rem) 1rem 5rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* decorative blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .blob-1 {
+      top: 0; left: 25%;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgb(212,168,83) 0%, transparent 70%);
+      opacity: 0.10;
+      transform: translate(-50%, -40%);
+    }
+    .blob-2 {
+      bottom: 0; right: 25%;
+      width: 384px; height: 384px;
+      background: radial-gradient(circle, rgb(200,149,106) 0%, transparent 70%);
+      opacity: 0.08;
+      transform: translate(50%, 40%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      margin-bottom: 2rem;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #f59e0b;
+      display: inline-block;
+    }
+
+    h1.hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.75rem, 7vw, 4.5rem);
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.25rem;
+    }
+    h2.hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.75rem, 7vw, 4.5rem);
+      font-weight: 700;
+      font-style: italic;
+      color: rgb(200, 149, 106);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 1.5rem;
+    }
+    .hero-desc {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: #6b7280;
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-desc strong { color: #374151; font-weight: 500; }
+
+    .btn-primary {
+      display: inline-block;
+      background: #111827;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: #374151; }
+    .btn-secondary {
+      display: inline-block;
+      border: 1px solid #d1d5db;
+      color: #374151;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background: #f9fafb; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      padding-top: 2.5rem;
+      border-top: 1px solid #f1f5f9;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #111827;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* ============================
+       BENEFITS SECTION
+    ============================= */
+    .section-benefits {
+      padding: 5rem 1rem;
+      background: rgb(248, 246, 241);
+    }
+    .section-inner {
+      max-width: 1152px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #d97706;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 1rem;
+    }
+    .section-desc {
+      font-size: 1.125rem;
+      color: #6b7280;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    @media(min-width: 640px) { .benefits-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(min-width: 1024px) { .benefits-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .benefit-card {
+      background: white;
+      border: 1px solid rgb(240, 237, 232);
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: box-shadow 0.3s;
+    }
+    .benefit-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .benefit-icon {
+      width: 48px; height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: #fffbeb;
+      margin-bottom: 1.25rem;
+    }
+    .benefit-icon i {
+      font-size: 1.5rem;
+      color: #d97706;
+    }
+    .benefit-title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.5rem;
+    }
+    .benefit-desc {
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ============================
+       PRICING SECTION
+    ============================= */
+    .section-pricing {
+      padding: 5rem 1rem;
+      background: rgb(250, 250, 248);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+    @media(min-width: 768px) {
+      .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .pricing-card {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .pricing-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.1); }
+
+    .pricing-card.light {
+      background: white;
+      border: 1px solid rgb(240, 237, 232);
+    }
+    .pricing-card.dark {
+      background: rgb(28, 28, 30);
+    }
+    @media(min-width: 768px) {
+      .pricing-card.dark { transform: scale(1.05); }
+    }
+
+    .plan-badge {
+      display: inline-flex;
+      align-self: flex-start;
+      margin-bottom: 1.25rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .plan-badge.popular {
+      background: rgba(245,158,11,0.18);
+      color: #fbbf24;
+    }
+    .plan-badge.conversion {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .plan-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+    }
+    .plan-desc {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      margin: 0 0 1.5rem;
+    }
+    .plan-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin: 0 0 2rem;
+      padding-bottom: 2rem;
+    }
+    .plan-price span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+    .plan-features {
+      list-style: none;
+      margin: 0 0 2rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.875rem;
+    }
+    .feature-icon {
+      width: 20px; height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .feature-icon.check-light { background: #f0fdf4; }
+    .feature-icon.check-light i { color: #16a34a; font-size: 0.7rem; font-weight: 700; }
+    .feature-icon.check-gold { background: rgba(245,158,11,0.18); }
+    .feature-icon.check-gold i { color: #fbbf24; font-size: 0.7rem; font-weight: 700; }
+    .feature-icon.cross { background: #f3f4f6; }
+    .feature-icon.cross i { color: #9ca3af; font-size: 0.7rem; }
+
+    .feature-text-dark { color: #d1d5db; }
+    .feature-text-light { color: #374151; }
+    .feature-unavail {
+      opacity: 0.4;
+    }
+
+    .btn-plan {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      border: none;
+    }
+    .btn-plan.light-outline {
+      border: 1px solid #d1d5db;
+      color: #1f2937;
+      background: transparent;
+    }
+    .btn-plan.light-outline:hover { background: #f9fafb; }
+    .btn-plan.gold { background: #f59e0b; color: white; }
+    .btn-plan.gold:hover { background: #fbbf24; }
+    .btn-plan.dark-fill { background: #111827; color: white; }
+    .btn-plan.dark-fill:hover { background: #374151; }
+
+    /* Maintenance note */
+    .maintenance-note {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+    .maintenance-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid #f1f5f9;
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+    }
+    .maintenance-inner i { color: #f59e0b; font-size: 1.25rem; }
+    .maintenance-inner p { font-size: 0.875rem; color: #4b5563; margin: 0; }
+    .maintenance-inner strong { color: #1f2937; }
+
+    /* ============================
+       CONTACT SECTION
+    ============================= */
+    .section-contact {
+      padding: 5rem 1rem;
+      background: rgb(250, 250, 248);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1152px;
+      margin: 0 auto;
+    }
+    @media(min-width: 1024px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .contact-info-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 1.5rem;
+      line-height: 1.15;
+    }
+    .contact-info-desc {
+      font-size: 1.125rem;
+      color: #6b7280;
+      line-height: 1.7;
+      margin: 0 0 2rem;
+    }
+
+    .contact-perks {
+      list-style: none;
+      margin: 0 0 2.5rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-perks li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+    .perk-icon {
+      width: 32px; height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fffbeb;
+      flex-shrink: 0;
+    }
+    .perk-icon i { color: #d97706; }
+
+    /* How it works */
+    .how-works {
+      background: #f9fafb;
+      border: 1px solid #f1f5f9;
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .how-works-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #d97706;
+      margin-bottom: 1rem;
+    }
+    .how-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .how-step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    /* Form */
+    .contact-form-box {
+      background: white;
+      border: 1px solid rgb(240, 237, 232);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 1.5rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      background: white;
+      color: #111827;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 3px rgba(251,191,36,0.15);
+    }
+    .form-group textarea { resize: none; }
+    .char-count {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-left: 8px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #111827;
+      color: white;
+      padding: 14px;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-submit:hover { background: #374151; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .form-note {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .form-success-icon {
+      width: 64px; height: 64px;
+      background: #f0fdf4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .form-success-icon i { font-size: 2rem; color: #16a34a; }
+    .form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: #111827;
+      margin: 0 0 0.5rem;
+    }
+    .form-success p { font-size: 0.875rem; color: #6b7280; margin: 0; }
+
+    /* ============================
+       WHATSAPP BUTTON
+    ============================= */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #25d366;
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover {
+      background: #1ebe5d;
+      transform: scale(1.08);
+    }
+    .whatsapp-btn i { font-size: 1.5rem; }
+
+    /* ============================
+       FOOTER
+    ============================= */
+    footer {
+      background: rgb(240, 237, 232);
+      padding: 2.5rem 1rem;
+      margin-top: 2rem;
+    }
+    .footer-inner {
+      max-width: 1152px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .footer-note {
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #111827; }
+    .footer-links span { color: #d1d5db; }
+
+    /* ============================
+       DIVIDERS
+    ============================= */
+    .border-dark { border-color: rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+
+  <!-- ===========================
+       NAVBAR
+  ============================ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">WebLocal<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#precios">Pricing</a></li>
+        <li><a href="#contacto">Contact</a></li>
+      </ul>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <!-- Language switcher -->
+        <div class="lang-wrapper">
+          <button class="lang-btn" id="langBtn" aria-label="Change language">
+            <span id="langFlag" class="fi fi-gb" style="width:20px;height:15px;display:inline-block;vertical-align:middle;border-radius:2px;overflow:hidden;"></span>
+            <span id="langCode">EN</span>
+            <i class="ri-arrow-down-s-line" style="font-size:0.75rem;" id="langArrow"></i>
+          </button>
+          <div class="lang-dropdown" id="langDropdown">
+            <div class="lang-option" id="opt-en" onclick="setLang('en','https://flagcdn.com/w20/gb.png','EN','EN')"><span class="fi fi-gb" style="width:20px;height:15px;display:inline-block;vertical-align:middle;border-radius:2px;overflow:hidden;"></span> English</div>
+            <div class="lang-option" id="opt-es" onclick="setLang('es','https://flagcdn.com/w20/es.png','ES','ES')"><span class="fi fi-es" style="width:20px;height:15px;display:inline-block;vertical-align:middle;border-radius:2px;overflow:hidden;"></span> Español</div>
+            <div class="lang-option" id="opt-bg" onclick="setLang('bg','https://flagcdn.com/w20/bg.png','BG','BG')"><span class="fi fi-bg" style="width:20px;height:15px;display:inline-block;vertical-align:middle;border-radius:2px;overflow:hidden;"></span> Български</div>
+          </div>
+        </div>
+
+        <a href="#contacto" class="btn-cta-nav">Free Quote</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===========================
+       HERO
+  ============================ -->
+  <main>
+    <section class="hero">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+
+      <div class="badge reveal">
+        <span class="badge-dot"></span>
+        Web Design Agency for Local Businesses
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <h1 class="hero-title">Your business deserves</h1>
+        <h2 class="hero-subtitle">to be online.</h2>
+      </div>
+
+      <p class="hero-desc reveal reveal-delay-2">
+        We build professional websites for local businesses that have no online presence yet, or whose site has become outdated.
+        <strong>More customers from Google Maps.</strong>
+      </p>
+
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="#precios" class="btn-primary">See pricing</a>
+        <a href="#contacto" class="btn-secondary">Talk to us</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats reveal reveal-delay-4">
+        <div class="text-center">
+          <div class="stat-num">+200</div>
+          <div class="stat-label">Local businesses helped</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">More visits from Google</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-num">7 days</div>
+          <div class="stat-label">Average delivery time</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         BENEFITS
+    ============================ -->
+    <section class="section-benefits">
+      <div class="section-inner">
+        <div class="text-center">
+          <p class="section-tag reveal">Why choose us</p>
+          <h2 class="section-title reveal reveal-delay-1">
+            We don't just build websites.<br><em>We get you customers.</em>
+          </h2>
+          <p class="section-desc reveal reveal-delay-2">
+            Every website we build is designed to turn visits into calls, bookings and real sales.
+          </p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card reveal reveal-delay-1">
+            <div class="benefit-icon"><i class="ri-map-pin-2-line"></i></div>
+            <h3 class="benefit-title">Google Maps Presence</h3>
+            <p class="benefit-desc">We help your business appear in the top results when someone searches for your service in your city.</p>
+          </div>
+          <div class="benefit-card reveal reveal-delay-2">
+            <div class="benefit-icon"><i class="ri-smartphone-line"></i></div>
+            <h3 class="benefit-title">100% Mobile-Friendly</h3>
+            <p class="benefit-desc">Over 70% of local searches happen on mobile. Your website will look perfect on any screen.</p>
+          </div>
+          <div class="benefit-card reveal reveal-delay-3">
+            <div class="benefit-icon"><i class="ri-rocket-line"></i></div>
+            <h3 class="benefit-title">Ready in Record Time</h3>
+            <p class="benefit-desc">We deliver your website in 7 days. No endless waits or complicated processes. Fast, simple and professional.</p>
+          </div>
+          <div class="benefit-card reveal reveal-delay-1">
+            <div class="benefit-icon"><i class="ri-bar-chart-line"></i></div>
+            <h3 class="benefit-title">Local SEO Included</h3>
+            <p class="benefit-desc">We optimise your site so Google shows it to local customers searching for exactly what you offer.</p>
+          </div>
+          <div class="benefit-card reveal reveal-delay-2">
+            <div class="benefit-icon"><i class="ri-chat-3-line"></i></div>
+            <h3 class="benefit-title">WhatsApp Integration</h3>
+            <p class="benefit-desc">Your customers can reach you in one tap from any page. More contacts, more sales.</p>
+          </div>
+          <div class="benefit-card reveal reveal-delay-3">
+            <div class="benefit-icon"><i class="ri-calendar-check-line"></i></div>
+            <h3 class="benefit-title">Online Bookings</h3>
+            <p class="benefit-desc">Standard and Premium plans include a booking system so your customers can schedule without calling you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         PRICING
+    ============================ -->
+    <section class="section-pricing" id="precios">
+      <div class="section-inner">
+        <div class="text-center">
+          <p class="section-tag reveal">Transparent pricing</p>
+          <h2 class="section-title reveal reveal-delay-1">Choose your plan</h2>
+          <p class="section-desc reveal reveal-delay-2">No surprises or hidden fees. You know exactly what each plan includes.</p>
+        </div>
+
+        <div class="pricing-grid">
+
+          <!-- Básico -->
+          <div class="pricing-card light reveal reveal-delay-1">
+            <h3 class="plan-name" style="color:#111827;">Basic</h3>
+            <p class="plan-desc" style="color:#6b7280;">Ideal for businesses that need a fast and simple online presence.</p>
+            <div class="plan-price" style="color:#111827;border-bottom:1px solid #f1f5f9;">
+              400€ – 900€<span style="color:#9ca3af;">one-time fee</span>
+            </div>
+            <ul class="plan-features">
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">1-page website</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Mobile-friendly design</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Integrated WhatsApp button</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Google Maps integration</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Basic SEO included</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Contact form</span></li>
+              <li class="feature-unavail"><div class="feature-icon cross"><i class="ri-close-line"></i></div><span style="text-decoration:line-through;color:#9ca3af;">Booking system</span></li>
+              <li class="feature-unavail"><div class="feature-icon cross"><i class="ri-close-line"></i></div><span style="text-decoration:line-through;color:#9ca3af;">Professional copywriting</span></li>
+              <li class="feature-unavail"><div class="feature-icon cross"><i class="ri-close-line"></i></div><span style="text-decoration:line-through;color:#9ca3af;">Advanced SEO</span></li>
+            </ul>
+            <a href="#contacto" class="btn-plan light-outline">Start with Basic</a>
+          </div>
+
+          <!-- Estándar (dark featured) -->
+          <div class="pricing-card dark reveal reveal-delay-2">
+            <div class="plan-badge popular">MOST POPULAR</div>
+            <h3 class="plan-name" style="color:white;">Standard</h3>
+            <p class="plan-desc" style="color:#9ca3af;">The most complete option to grow and attract customers from Google.</p>
+            <div class="plan-price" style="color:white;border-bottom:1px solid rgba(255,255,255,0.1);">
+              900€ – 2.000€<span style="color:#9ca3af;">one-time fee</span>
+            </div>
+            <ul class="plan-features">
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">5 to 8-page website</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Custom professional design</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Services &amp; pricing section</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Online booking system</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Advanced local SEO</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Google Maps integration</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">WhatsApp button</span></li>
+              <li><div class="feature-icon check-gold"><i class="ri-check-line"></i></div><span class="feature-text-dark">Contact form</span></li>
+              <li class="feature-unavail"><div class="feature-icon cross"><i class="ri-close-line"></i></div><span style="text-decoration:line-through;color:#6b7280;">Professional copywriting</span></li>
+            </ul>
+            <a href="#contacto" class="btn-plan gold">Start with Standard</a>
+          </div>
+
+          <!-- Premium -->
+          <div class="pricing-card light reveal reveal-delay-3">
+            <div class="plan-badge conversion">MAX CONVERSION</div>
+            <h3 class="plan-name" style="color:#111827;">Premium</h3>
+            <p class="plan-desc" style="color:#6b7280;">Complete solution for businesses that want to stand out and turn visits into customers.</p>
+            <div class="plan-price" style="color:#111827;border-bottom:1px solid #f1f5f9;">
+              2.000€ – 4.000€<span style="color:#9ca3af;">one-time fee</span>
+            </div>
+            <ul class="plan-features">
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">100% custom design</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Professional copywriting included</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Advanced &amp; technical SEO</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">High-conversion layout</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Online booking system</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Google Maps integration</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Local competitor analysis</span></li>
+              <li><div class="feature-icon check-light"><i class="ri-check-line"></i></div><span class="feature-text-light">Monthly performance report</span></li>
+            </ul>
+            <a href="#contacto" class="btn-plan dark-fill">Start with Premium</a>
+          </div>
+
+        </div>
+
+        <!-- Maintenance note -->
+        <div class="maintenance-note reveal">
+          <div class="maintenance-inner">
+            <i class="ri-shield-check-line"></i>
+            <p><strong>Optional maintenance:</strong> €30 – €150/mo · Updates · SEO improvements · Technical support</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         CONTACT
+    ============================ -->
+    <section class="section-contact" id="contacto">
+      <div class="contact-grid">
+
+        <!-- Info column -->
+        <div class="reveal">
+          <p class="section-tag">Free consultation</p>
+          <h2 class="contact-info-title">Not sure which plan you need?</h2>
+          <p class="contact-info-desc">
+            Tell us about your business and we'll recommend the right plan. No commitment, no cost, no hassle.
+          </p>
+
+          <ul class="contact-perks">
+            <li>
+              <div class="perk-icon"><i class="ri-time-line"></i></div>
+              Response within 24 hours
+            </li>
+            <li>
+              <div class="perk-icon"><i class="ri-shield-check-line"></i></div>
+              Free quote with no commitment
+            </li>
+            <li>
+              <div class="perk-icon"><i class="ri-map-pin-line"></i></div>
+              We work with businesses across Spain and Bulgaria
+            </li>
+          </ul>
+
+          <div class="how-works">
+            <p class="how-works-tag">How it works</p>
+            <div class="how-step">
+              <div class="step-num">1</div>
+              <p class="step-text">You tell us about your business and what you need</p>
+            </div>
+            <div class="how-step">
+              <div class="step-num">2</div>
+              <p class="step-text">We design your website and show it to you</p>
+            </div>
+            <div class="how-step">
+              <div class="step-num">3</div>
+              <p class="step-text">We publish it and you appear on Google</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form column -->
+        <div class="reveal reveal-delay-2">
+          <div class="contact-form-box">
+            <form id="contactForm" novalidate>
+              <h3 class="form-title">Get your free quote</h3>
+
+              <div class="form-group">
+                <label for="nombre_negocio">Name &amp; business</label>
+                <input id="nombre_negocio" name="nombre_negocio" type="text" required
+                  placeholder="E.g. John – Style Barbershop">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" required
+                  placeholder="tu@email.com">
+              </div>
+
+              <div class="form-group">
+                <label for="telefono">Phone (optional)</label>
+                <input id="telefono" name="telefono" type="tel"
+                  placeholder="+34 600 000 000">
+              </div>
+
+              <div class="form-group">
+                <label for="plan_interes">Plan of interest</label>
+                <select id="plan_interes" name="plan_interes">
+                  <option value="">I'm not sure yet</option>
+                  <option value="Basic">Basic (€400 – €900)</option>
+                  <option value="Standard">Standard (€900 – €2,000)</option>
+                  <option value="Premium">Premium (€2,000 – €4,000)</option>
+                  <option value="Maintenance">Maintenance only</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mensaje">
+                  Tell us about your business
+                  <span class="char-count" id="charCount">0/500</span>
+                </label>
+                <textarea id="mensaje" name="mensaje" rows="4" maxlength="500" required
+                  placeholder="What do you do? Do you have a website? What do you need to improve?"></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit" id="submitBtn">
+                Request free quote
+              </button>
+              <p class="form-note">No commitment · Response in &lt;24h · 100% free</p>
+            </form>
+
+            <!-- Success state -->
+            <div class="form-success" id="formSuccess">
+              <div class="form-success-icon">
+                <i class="ri-check-line"></i>
+              </div>
+              <h3>Message sent!</h3>
+              <p>We'll get back to you within 24 hours. Thank you for reaching out!</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===========================
+       WHATSAPP FLOATING BTN
+  ============================ -->
+  <a href="https://wa.me/34608240759" target="_blank" rel="noopener" class="whatsapp-btn" aria-label="WhatsApp">
+    <i class="ri-whatsapp-line"></i>
+  </a>
+
+  <!-- ===========================
+       FOOTER
+  ============================ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="logo">WebLocal<span>.</span></span>
+      <p class="footer-note">Web design for local businesses · €30 – €150/mo maintenance · Spain &amp; Bulgaria</p>
+      <div class="footer-links">
+        <a href="#contacto">Contact</a>
+        <span>|</span>
+        <a href="#precios">Pricing</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===========================
+       JAVASCRIPT
+  ============================ -->
+  <script>
+    /* ---- Scroll: navbar shadow ---- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ---- Scroll reveal animation ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ---- Language switcher ---- */
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const langArrow = document.getElementById('langArrow');
+
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = langDropdown.classList.toggle('open');
+      langArrow.style.transform = isOpen ? 'rotate(180deg)' : '';
+    });
+    document.addEventListener('click', () => {
+      langDropdown.classList.remove('open');
+      langArrow.style.transform = '';
+    });
+
+    // ---- Translations ----
+    const T = {
+      en: {
+        navPricing: 'Pricing', navContact: 'Contact', navCta: 'Free Quote',
+        badgeText: 'Web Design Agency for Local Businesses',
+        heroTitle: 'Your business deserves', heroSubtitle: 'to be online.',
+        heroDesc: 'We build professional websites for local businesses that have no online presence yet, or whose site has become outdated.',
+        heroDescStrong: 'More customers from Google Maps.',
+        btnPrices: 'See pricing', btnTalk: 'Talk to us',
+        stat1: 'Local businesses helped', stat2: 'More visits from Google', stat3: '7 days', stat3l: 'Average delivery time',
+        whyTag: 'Why choose us',
+        whyTitle: "We don't just build websites.", whyTitleEm: 'We get you customers.',
+        whyDesc: 'Every website we build is designed to turn visits into calls, bookings and real sales.',
+        b1t: 'Google Maps Presence', b1d: 'We help your business appear in the top results when someone searches for your service in your city.',
+        b2t: '100% Mobile-Friendly', b2d: 'Over 70% of local searches happen on mobile. Your website will look perfect on any screen.',
+        b3t: 'Ready in Record Time', b3d: 'We deliver your website in 7 days. No endless waits or complicated processes. Fast, simple and professional.',
+        b4t: 'Local SEO Included', b4d: 'We optimise your site so Google shows it to local customers searching for exactly what you offer.',
+        b5t: 'WhatsApp Integration', b5d: 'Your customers can reach you in one tap from any page. More contacts, more sales.',
+        b6t: 'Online Bookings', b6d: 'Standard and Premium plans include a booking system so your customers can schedule without calling you.',
+        pricingTag: 'Transparent pricing', pricingTitle: 'Choose your plan',
+        pricingDesc: 'No surprises or hidden fees. You know exactly what each plan includes.',
+        planBasicName: 'Basic', planBasicDesc: 'Ideal for businesses that need a fast and simple online presence.',
+        planBasicPrice: '€400 – €900', planFee: 'one-time fee',
+        pf1:'1-page website',pf2:'Mobile-friendly design',pf3:'Integrated WhatsApp button',pf4:'Google Maps integration',pf5:'Basic SEO included',pf6:'Contact form',pf7:'Booking system',pf8:'Professional copywriting',pf9:'Advanced SEO',
+        btnBasic: 'Start with Basic',
+        planPopular: 'MOST POPULAR',
+        planStdName: 'Standard', planStdDesc: 'The most complete option to grow and attract customers from Google.',
+        planStdPrice: '€900 – €2,000',
+        ps1:'5 to 8-page website',ps2:'Custom professional design',ps3:'Services & pricing section',ps4:'Online booking system',ps5:'Advanced local SEO',ps6:'Google Maps integration',ps7:'WhatsApp button',ps8:'Contact form',ps9:'Professional copywriting',
+        btnStd: 'Start with Standard',
+        planConversion: 'MAX CONVERSION',
+        planPremName: 'Premium', planPremDesc: 'Complete solution for businesses that want to stand out and turn visits into customers.',
+        planPremPrice: '€2,000 – €4,000',
+        pp1:'100% custom design',pp2:'Professional copywriting included',pp3:'Advanced & technical SEO',pp4:'High-conversion layout',pp5:'Online booking system',pp6:'Google Maps integration',pp7:'Local competitor analysis',pp8:'Monthly performance report',
+        btnPrem: 'Start with Premium',
+        maintenance: '<strong>Optional maintenance:</strong> €30 – €150/mo · Updates · SEO improvements · Technical support',
+        contactTag: 'Free consultation', contactTitle: "Not sure which plan you need?",
+        contactDesc: "Tell us about your business and we'll recommend the right plan. No commitment, no cost, no hassle.",
+        perk1:'Response within 24 hours',perk2:'Free quote with no commitment',perk3:'We work with businesses across Spain and Bulgaria',
+        howTag:'How it works',step1:"You tell us about your business and what you need",step2:"We design your website and show it to you",step3:"We publish it and you appear on Google",
+        formTitle:'Get your free quote',lblName:'Name & business',phName:'E.g. John – Style Barbershop',lblEmail:'Email address',lblPhone:'Phone (optional)',lblPlan:'Plan of interest',
+        optNone:"I'm not sure yet",optBasic:'Basic (€400 – €900)',optStd:'Standard (€900 – €2,000)',optPrem:'Premium (€2,000 – €4,000)',optMaint:'Maintenance only',
+        lblMsg:'Tell us about your business',phMsg:'What do you do? Do you have a website? What do you need to improve?',
+        btnSubmit:'Request free quote',formNote:'No commitment · Response in <24h · 100% free',
+        successTitle:'Message sent!',successMsg:"We'll get back to you within 24 hours. Thank you for reaching out!",
+        footerNote:'Web design for local businesses · €30 – €150/mo maintenance · Spain & Bulgaria',
+        footerContact:'Contact',footerPricing:'Pricing',
+      },
+      es: {
+        navPricing:'Precios',navContact:'Contacto',navCta:'Presupuesto gratis',
+        badgeText:'Agencia de Diseño Web para Negocios Locales',
+        heroTitle:'Tu negocio merece',heroSubtitle:'estar en internet.',
+        heroDesc:'Creamos páginas web profesionales para negocios locales que aún no tienen presencia online o cuya web ha quedado anticuada.',
+        heroDescStrong:'Más clientes desde Google Maps.',
+        btnPrices:'Ver precios',btnTalk:'Hablar con nosotros',
+        stat1:'Negocios locales ayudados',stat2:'Más visitas desde Google',stat3:'7 días',stat3l:'Tiempo medio de entrega',
+        whyTag:'Por qué elegirnos',
+        whyTitle:'No solo hacemos webs.',whyTitleEm:'Conseguimos clientes.',
+        whyDesc:'Cada web que creamos está diseñada para convertir visitas en llamadas, reservas y ventas reales.',
+        b1t:'Presencia en Google Maps',b1d:'Ayudamos a que tu negocio aparezca en los primeros resultados cuando alguien busca tu servicio en tu ciudad.',
+        b2t:'100% adaptada a móvil',b2d:'Más del 70% de las búsquedas locales se hacen desde el teléfono. Tu web se verá perfecta en cualquier pantalla.',
+        b3t:'Lista en tiempo récord',b3d:'Entregamos tu web en 7 días. Sin esperas interminables ni procesos complicados. Rápido, sencillo y profesional.',
+        b4t:'SEO local incluido',b4d:'Optimizamos tu web para que Google la muestre a clientes de tu zona que buscan exactamente lo que tú ofreces.',
+        b5t:'WhatsApp integrado',b5d:'Tus clientes podrán contactarte con un solo clic desde cualquier página de tu web. Más contactos, más ventas.',
+        b6t:'Reservas online',b6d:'En el plan Estándar y Premium incluimos un sistema de reservas para que tus clientes puedan agendar sin llamarte.',
+        pricingTag:'Tarifas transparentes',pricingTitle:'Elige tu plan',
+        pricingDesc:'Sin sorpresas ni letra pequeña. Sabes exactamente lo que incluye cada plan.',
+        planBasicName:'Básico',planBasicDesc:'Ideal para negocios que necesitan presencia online rápida y sencilla.',
+        planBasicPrice:'400€ – 900€',planFee:'pago único',
+        pf1:'Web de 1 página',pf2:'Diseño adaptado a móvil',pf3:'Botón de WhatsApp integrado',pf4:'Integración con Google Maps',pf5:'SEO básico incluido',pf6:'Formulario de contacto',pf7:'Sistema de reservas',pf8:'Copywriting profesional',pf9:'SEO avanzado',
+        btnBasic:'Empezar con Básico',
+        planPopular:'MÁS POPULAR',
+        planStdName:'Estándar',planStdDesc:'La opción más completa para crecer y captar clientes desde Google.',
+        planStdPrice:'900€ – 2.000€',
+        ps1:'Web de 5 a 8 páginas',ps2:'Diseño profesional a medida',ps3:'Sección de servicios y precios',ps4:'Sistema de reservas online',ps5:'SEO local avanzado',ps6:'Integración Google Maps',ps7:'Botón de WhatsApp',ps8:'Formulario de contacto',ps9:'Copywriting profesional',
+        btnStd:'Empezar con Estándar',
+        planConversion:'MÁXIMA CONVERSIÓN',
+        planPremName:'Premium',planPremDesc:'Solución completa para negocios que quieren destacar y convertir visitas en clientes.',
+        planPremPrice:'2.000€ – 4.000€',
+        pp1:'Diseño 100% personalizado',pp2:'Copywriting profesional incluido',pp3:'SEO avanzado y técnico',pp4:'Layout de alta conversión',pp5:'Sistema de reservas online',pp6:'Integración Google Maps',pp7:'Análisis de competencia local',pp8:'Informe de rendimiento mensual',
+        btnPrem:'Empezar con Premium',
+        maintenance:'<strong>Mantenimiento opcional:</strong> 30€ – 150€/mes · Actualizaciones · Mejoras SEO · Soporte técnico',
+        contactTag:'Contacto gratuito',contactTitle:'¿No sabes qué plan necesitas?',
+        contactDesc:'Cuéntanos tu negocio y te recomendamos el plan más adecuado. Sin compromiso, sin coste, sin complicaciones.',
+        perk1:'Respuesta en menos de 24 horas',perk2:'Presupuesto gratuito y sin compromiso',perk3:'Trabajamos con negocios de toda España y Bulgaria',
+        howTag:'Así funciona',step1:'Nos cuentas tu negocio y qué necesitas',step2:'Diseñamos tu web y te la mostramos',step3:'La publicamos y apareces en Google',
+        formTitle:'Pide tu presupuesto gratis',lblName:'Nombre y negocio',phName:'Ej: Juan – Peluquería Estilo',lblEmail:'Correo electrónico',lblPhone:'Teléfono (opcional)',lblPlan:'Plan de interés',
+        optNone:'No lo sé todavía',optBasic:'Básico (400€ – 900€)',optStd:'Estándar (900€ – 2.000€)',optPrem:'Premium (2.000€ – 4.000€)',optMaint:'Solo mantenimiento',
+        lblMsg:'Cuéntanos sobre tu negocio',phMsg:'¿A qué te dedicas? ¿Tienes web actualmente? ¿Qué necesitas mejorar?',
+        btnSubmit:'Solicitar presupuesto gratis',formNote:'Sin compromiso · Respuesta en <24h · 100% gratuito',
+        successTitle:'¡Mensaje enviado!',successMsg:'Te responderemos en menos de 24 horas. ¡Gracias por contactarnos!',
+        footerNote:'Diseño web para negocios locales · 30€ – 150€/mes mantenimiento · España y Bulgaria',
+        footerContact:'Contacto',footerPricing:'Precios',
+      },
+      bg: {
+        navPricing:'Цени',navContact:'Контакт',navCta:'Безплатна оферта',
+        badgeText:'Агенция за уеб дизайн за местни бизнеси',
+        heroTitle:'Вашият бизнес заслужава',heroSubtitle:'да е онлайн.',
+        heroDesc:'Създаваме професионални уебсайтове за местни бизнеси, които нямат онлайн присъствие или чийто сайт е остарял.',
+        heroDescStrong:'Повече клиенти от Google Maps.',
+        btnPrices:'Виж цените',btnTalk:'Говори с нас',
+        stat1:'Помогнати местни бизнеса',stat2:'Повече посещения от Google',stat3:'7 дни',stat3l:'Средно време за доставка',
+        whyTag:'Защо нас',
+        whyTitle:'Не само правим сайтове.',whyTitleEm:'Намираме ви клиенти.',
+        whyDesc:'Всеки сайт, който създаваме, е проектиран да превръща посещенията в обаждания, резервации и реални продажби.',
+        b1t:'Присъствие в Google Maps',b1d:'Помагаме на бизнеса ви да се появява в първите резултати, когато някой търси вашата услуга в града.',
+        b2t:'100% адаптиран за мобилни',b2d:'Над 70% от местните търсения се правят от телефон. Сайтът ви ще изглежда перфектно на всеки екран.',
+        b3t:'Готово за рекордно време',b3d:'Доставяме сайта ви за 7 дни. Без безкрайно чакане или сложни процеси.',
+        b4t:'Включено местно SEO',b4d:'Оптимизираме сайта ви, за да го показва Google на местни клиенти, търсещи точно това, което предлагате.',
+        b5t:'Интеграция с WhatsApp',b5d:'Клиентите ви могат да ви пишат с едно натискане от всяка страница. Повече контакти, повече продажби.',
+        b6t:'Онлайн резервации',b6d:'Стандартните и Premium планове включват система за резервации, за да не се налага клиентите да ви се обаждат.',
+        pricingTag:'Прозрачни цени',pricingTitle:'Изберете план',
+        pricingDesc:'Без изненади или скрити такси. Знаете точно какво включва всеки план.',
+        planBasicName:'Базов',planBasicDesc:'Идеален за бизнеси, нуждаещи се от бързо и просто онлайн присъствие.',
+        planBasicPrice:'400€ – 900€',planFee:'еднократно плащане',
+        pf1:'Едностраничен сайт',pf2:'Адаптивен дизайн',pf3:'Бутон за WhatsApp',pf4:'Интеграция с Google Maps',pf5:'Базово SEO',pf6:'Форма за контакт',pf7:'Система за резервации',pf8:'Професионален копирайтинг',pf9:'Разширено SEO',
+        btnBasic:'Започнете с Базов',
+        planPopular:'НАЙ-ПОПУЛЯРЕН',
+        planStdName:'Стандарт',planStdDesc:'Най-пълният вариант за растеж и привличане на клиенти от Google.',
+        planStdPrice:'900€ – 2.000€',
+        ps1:'Сайт от 5 до 8 страници',ps2:'Персонализиран дизайн',ps3:'Секция услуги и цени',ps4:'Онлайн резервации',ps5:'Разширено местно SEO',ps6:'Интеграция с Google Maps',ps7:'Бутон за WhatsApp',ps8:'Форма за контакт',ps9:'Копирайтинг',
+        btnStd:'Започнете със Стандарт',
+        planConversion:'МАКСИМАЛНА КОНВЕРСИЯ',
+        planPremName:'Премиум',planPremDesc:'Пълно решение за бизнеси, искащи да се откроят и превърнат посещенията в клиенти.',
+        planPremPrice:'2.000€ – 4.000€',
+        pp1:'100% персонализиран дизайн',pp2:'Включен копирайтинг',pp3:'Разширено и техническо SEO',pp4:'Оформление с висока конверсия',pp5:'Онлайн резервации',pp6:'Интеграция с Google Maps',pp7:'Анализ на местна конкуренция',pp8:'Месечен доклад за ефективност',
+        btnPrem:'Започнете с Премиум',
+        maintenance:'<strong>Незадължителна поддръжка:</strong> 30€ – 150€/мес · Актуализации · SEO подобрения · Техническа поддръжка',
+        contactTag:'Безплатна консултация',contactTitle:'Не знаете кой план ви трябва?',
+        contactDesc:'Разкажете ни за бизнеса си и ние ще препоръчаме подходящия план. Без ангажимент, без разходи.',
+        perk1:'Отговор до 24 часа',perk2:'Безплатна оферта без ангажимент',perk3:'Работим с бизнеси в цяла Испания и България',
+        howTag:'Как работи',step1:'Разказвате ни за бизнеса си и нуждите ви',step2:'Проектираме сайта и ви го показваме',step3:'Публикуваме го и се появявате в Google',
+        formTitle:'Поискайте безплатна оферта',lblName:'Име и бизнес',phName:'Напр.: Иван – Фризьорски салон',lblEmail:'Имейл адрес',lblPhone:'Телефон (по желание)',lblPlan:'Интересуващ план',
+        optNone:'Не съм сигурен/а',optBasic:'Базов (400€ – 900€)',optStd:'Стандарт (900€ – 2.000€)',optPrem:'Премиум (2.000€ – 4.000€)',optMaint:'Само поддръжка',
+        lblMsg:'Разкажете ни за бизнеса си',phMsg:'С какво се занимавате? Имате ли сайт? Какво искате да подобрите?',
+        btnSubmit:'Поискайте безплатна оферта',formNote:'Без ангажимент · Отговор до 24ч · 100% безплатно',
+        successTitle:'Съобщението е изпратено!',successMsg:'Ще ви отговорим в рамките на 24 часа. Благодарим, че се свързахте!',
+        footerNote:'Уеб дизайн за местни бизнеси · 30€ – 150€/мес поддръжка · Испания и България',
+        footerContact:'Контакт',footerPricing:'Цени',
+      }
+    };
+
+    function applyTranslation(code) {
+      const t = T[code] || T.en;
+      document.documentElement.lang = code;
+      // Navbar
+      document.querySelector('.nav-links li:nth-child(1) a').textContent = t.navPricing;
+      document.querySelector('.nav-links li:nth-child(2) a').textContent = t.navContact;
+      document.querySelector('.btn-cta-nav').textContent = t.navCta;
+      // Hero
+      document.querySelector('.badge').innerHTML = '<span class="badge-dot"></span> ' + t.badgeText;
+      document.querySelector('h1.hero-title').textContent = t.heroTitle;
+      document.querySelector('h2.hero-subtitle').textContent = t.heroSubtitle;
+      document.querySelector('.hero-desc').innerHTML = t.heroDesc + ' <strong>' + t.heroDescStrong + '</strong>';
+      document.querySelector('.hero-ctas .btn-primary').textContent = t.btnPrices;
+      document.querySelector('.hero-ctas .btn-secondary').textContent = t.btnTalk;
+      const statNums = document.querySelectorAll('.stat-num');
+      const statLabels = document.querySelectorAll('.stat-label');
+      statLabels[0].textContent = t.stat1; statLabels[1].textContent = t.stat2;
+      statNums[2].textContent = t.stat3; statLabels[2].textContent = t.stat3l;
+      // Benefits
+      const bTags = document.querySelectorAll('.section-tag');
+      bTags[0].textContent = t.whyTag;
+      const secTitles = document.querySelectorAll('.section-title');
+      secTitles[0].innerHTML = t.whyTitle + '<br><em>' + t.whyTitleEm + '</em>';
+      const secDescs = document.querySelectorAll('.section-desc');
+      secDescs[0].textContent = t.whyDesc;
+      const bCards = document.querySelectorAll('.benefit-card');
+      const bts = [t.b1t,t.b2t,t.b3t,t.b4t,t.b5t,t.b6t];
+      const bds = [t.b1d,t.b2d,t.b3d,t.b4d,t.b5d,t.b6d];
+      bCards.forEach((c,i) => { c.querySelector('.benefit-title').textContent = bts[i]; c.querySelector('.benefit-desc').textContent = bds[i]; });
+      // Pricing
+      bTags[1].textContent = t.pricingTag;
+      secTitles[1].textContent = t.pricingTitle;
+      secDescs[1].textContent = t.pricingDesc;
+      const cards = document.querySelectorAll('.pricing-card');
+      // Basic
+      cards[0].querySelector('.plan-name').textContent = t.planBasicName;
+      cards[0].querySelector('.plan-desc').textContent = t.planBasicDesc;
+      const bPrice = cards[0].querySelector('.plan-price');
+      bPrice.childNodes[0].textContent = t.planBasicPrice;
+      bPrice.querySelector('span').textContent = t.planFee;
+      const bFeats = cards[0].querySelectorAll('.plan-features li span:last-child');
+      [t.pf1,t.pf2,t.pf3,t.pf4,t.pf5,t.pf6,t.pf7,t.pf8,t.pf9].forEach((f,i) => { if(bFeats[i]) bFeats[i].textContent = f; });
+      cards[0].querySelector('.btn-plan').textContent = t.btnBasic;
+      // Standard
+      cards[1].querySelector('.plan-badge').textContent = t.planPopular;
+      cards[1].querySelector('.plan-name').textContent = t.planStdName;
+      cards[1].querySelector('.plan-desc').textContent = t.planStdDesc;
+      const sPrice = cards[1].querySelector('.plan-price');
+      sPrice.childNodes[0].textContent = t.planStdPrice;
+      sPrice.querySelector('span').textContent = t.planFee;
+      const sFeats = cards[1].querySelectorAll('.plan-features li span:last-child');
+      [t.ps1,t.ps2,t.ps3,t.ps4,t.ps5,t.ps6,t.ps7,t.ps8,t.ps9].forEach((f,i) => { if(sFeats[i]) sFeats[i].textContent = f; });
+      cards[1].querySelector('.btn-plan').textContent = t.btnStd;
+      // Premium
+      cards[2].querySelector('.plan-badge').textContent = t.planConversion;
+      cards[2].querySelector('.plan-name').textContent = t.planPremName;
+      cards[2].querySelector('.plan-desc').textContent = t.planPremDesc;
+      const pPrice = cards[2].querySelector('.plan-price');
+      pPrice.childNodes[0].textContent = t.planPremPrice;
+      pPrice.querySelector('span').textContent = t.planFee;
+      const pFeats = cards[2].querySelectorAll('.plan-features li span:last-child');
+      [t.pp1,t.pp2,t.pp3,t.pp4,t.pp5,t.pp6,t.pp7,t.pp8].forEach((f,i) => { if(pFeats[i]) pFeats[i].textContent = f; });
+      cards[2].querySelector('.btn-plan').textContent = t.btnPrem;
+      // Maintenance
+      document.querySelector('.maintenance-inner p').innerHTML = t.maintenance;
+      // Contact
+      bTags[2].textContent = t.contactTag;
+      document.querySelector('.contact-info-title').textContent = t.contactTitle;
+      document.querySelector('.contact-info-desc').textContent = t.contactDesc;
+      const perks = document.querySelectorAll('.contact-perks li');
+      perks[0].childNodes[perks[0].childNodes.length-1].textContent = ' ' + t.perk1;
+      perks[1].childNodes[perks[1].childNodes.length-1].textContent = ' ' + t.perk2;
+      perks[2].childNodes[perks[2].childNodes.length-1].textContent = ' ' + t.perk3;
+      document.querySelector('.how-works-tag').textContent = t.howTag;
+      const steps = document.querySelectorAll('.step-text');
+      steps[0].textContent = t.step1; steps[1].textContent = t.step2; steps[2].textContent = t.step3;
+      // Form
+      document.querySelector('.form-title').textContent = t.formTitle;
+      document.querySelector('label[for="nombre_negocio"]').textContent = t.lblName;
+      document.getElementById('nombre_negocio').placeholder = t.phName;
+      document.querySelector('label[for="email"]').textContent = t.lblEmail;
+      document.querySelector('label[for="telefono"]').textContent = t.lblPhone;
+      document.querySelector('label[for="plan_interes"]').childNodes[0].textContent = t.lblPlan;
+      const opts = document.querySelectorAll('#plan_interes option');
+      opts[0].textContent = t.optNone; opts[1].textContent = t.optBasic;
+      opts[2].textContent = t.optStd; opts[3].textContent = t.optPrem; opts[4].textContent = t.optMaint;
+      const msgLabel = document.querySelector('label[for="mensaje"]');
+      msgLabel.childNodes[0].textContent = t.lblMsg + ' ';
+      document.getElementById('mensaje').placeholder = t.phMsg;
+      document.getElementById('submitBtn').textContent = t.btnSubmit;
+      document.querySelector('.form-note').innerHTML = t.formNote;
+      document.querySelector('.form-success h3').textContent = t.successTitle;
+      document.querySelector('.form-success p').textContent = t.successMsg;
+      // Footer
+      document.querySelector('.footer-note').textContent = t.footerNote;
+      const footerLinks = document.querySelectorAll('.footer-links a');
+      footerLinks[0].textContent = t.footerContact; footerLinks[1].textContent = t.footerPricing;
+      // Highlight active option
+      document.querySelectorAll('.lang-option').forEach(o => o.style.fontWeight = '');
+      const activeOpt = document.getElementById('opt-' + code);
+      if (activeOpt) activeOpt.style.fontWeight = '700';
+    }
+
+    const flagMap = { en: 'fi-gb', es: 'fi-es', bg: 'fi-bg' };
+    function setLang(code, flagSrc, label) {
+      const flagEl = document.getElementById('langFlag');
+      flagEl.className = 'fi ' + (flagMap[code] || 'fi-gb');
+      document.getElementById('langCode').textContent = label;
+      langDropdown.classList.remove('open');
+      langArrow.style.transform = '';
+      applyTranslation(code);
+    }
+
+    /* ---- Textarea char counter ---- */
+    const textarea = document.getElementById('mensaje');
+    const charCount = document.getElementById('charCount');
+    textarea.addEventListener('input', () => {
+      charCount.textContent = textarea.value.length + '/500';
+    });
+
+        /* ---- Form submit via Formspree ---- */
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formSuccess = document.getElementById('formSuccess');
+
+    // IMPORTANTE: Sustituye mzdylznl por el ID que obtengas en https://formspree.io
+    // Regístrate con weblocaldesigns@gmail.com y crea un formulario para obtener tu ID.
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mzdylznl';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      submitBtn.style.background = '#374151';
+
+      const data = {
+        nombre_negocio: document.getElementById('nombre_negocio').value.trim(),
+        email:          document.getElementById('email').value.trim(),
+        telefono:       document.getElementById('telefono').value.trim() || 'No indicado',
+        plan_interes:   document.getElementById('plan_interes').value || 'No especificado',
+        mensaje:        document.getElementById('mensaje').value.trim(),
+      };
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          submitBtn.textContent = '\u2713 Request sent';
+          submitBtn.style.background = '#16a34a';
+          submitBtn.style.opacity = '1';
+          setTimeout(() => {
+            form.style.display = 'none';
+            formSuccess.style.display = 'block';
+          }, 800);
+        } else {
+          throw new Error('Error en el servidor');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request free quote';
+        submitBtn.style.background = '';
+        alert('There was an error sending your message. Please try again or email us at weblocaldesigns@gmail.com');
+      }
+    });
+
+    // Apply default language on load
+    applyTranslation('en');
+
+    /* ---- Smooth scroll for anchor links ---- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
